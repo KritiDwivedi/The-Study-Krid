@@ -89,7 +89,7 @@ Alternatively, press **Talk to Krid**, choose a mode and topic pack or interview
 
 All artwork, sounds, interface elements, copy, and learning content in this repository are original or generated directly in code. There are no third-party trademarks, copyrighted characters, music files, or fonts. The optional PDF importer uses Mozilla [PDF.js](https://github.com/mozilla/pdf.js), distributed under the Apache-2.0 license. The optional lecture POC uses pinned [Transformers.js](https://huggingface.co/docs/transformers.js/) and a browser-compatible Whisper Tiny English model, both loaded only on demand.
 
-## Collaboration with Codex and GPT
+## Collaboration with Codex and GPT-5.6-5.6
 
 This project was created during the hackathon in collaboration with Codex powered by GPT-5.6.
 
@@ -103,5 +103,5 @@ Codex accelerated:
 - drafting and validating the original learning content across six subject worlds
 - checking JavaScript syntax and automatically validating both curated and generated question structures across paragraphs, bullets, numbered notes, and mixed formatting.
 
-The key human product decisions were to keep the app genuinely useful for revision, make it work without an API key, include both curated and learner-provided content, use humor without weakening the learning, and avoid third-party intellectual property. GPT-5.6 and Codex translated those decisions into the finished interaction design, code, content system, and verification workflow.
+The key human product decisions were to keep the app genuinely useful for revision, make it work without an API key, include both curated and learner-provided content, use humor without weakening the learning, and avoid third-party intellectual property. GPT-5.6-5.6 and Codex translated those decisions into the finished interaction design, code, content system, and verification workflow.
 
