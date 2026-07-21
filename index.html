@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="The Study Krid is a funny educational adventure with an animated voice-only study companion, memory conversations, interview practice, and playable note-based quests."
+    />
+    <meta name="theme-color" content="#0b1020" />
+    <title>The Study Krid — Learn. Play. Conquer.</title>
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+    <div class="noise" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <button class="brand" id="brandButton" aria-label="Return to home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>
+          <strong>THE STUDY KRID</strong>
+          <small>Learn. Play. Conquer.</small>
+        </span>
+      </button>
+      <div class="top-actions">
+        <button class="accessibility-toggle" id="accessibilityToggle" type="button" aria-pressed="false" aria-describedby="accessibilityStatus">
+          <span class="accessibility-symbol" aria-hidden="true">Aa</span>
+          <span class="accessibility-label">Easy view</span>
+        </button>
+        <button class="icon-button" id="helpButton" aria-label="How to play" title="How to play">
+          <span aria-hidden="true">?</span>
+        </button>
+        <button class="sound-button" id="soundButton" aria-pressed="true">
+          <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="sound-label">Sound on</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="screen landing-screen active" id="landingScreen" aria-labelledby="heroTitle">
+        <div class="landing-copy">
+          <div class="eyebrow"><span></span> THE KNOWLEDGE REALM NEEDS YOU</div>
+          <h1 id="heroTitle">
+            Your syllabus has<br />
+            <em>entered the game.</em>
+          </h1>
+          <p class="hero-text">
+            Explore strange worlds, outsmart Knowledge Glitches, and turn every correct answer
+            into a superpower. Useful enough for revision. Fun enough to forget it is revision.
+          </p>
+          <button class="meet-krid-button" id="openCompanionButton">
+            <span class="meet-krid-face" aria-hidden="true"><i></i><i></i><b></b></span>
+            <span><small>NEW · VOICE ONLY · NO API KEY</small><strong>Talk to Krid</strong><em>Teach a topic, practise memory, or face a mock interview</em></span>
+            <b aria-hidden="true">→</b>
+          </button>
+          <div class="hero-metrics" aria-label="Game features">
+            <div><strong>240+</strong><span>topic portals</span></div>
+            <div><strong>∞</strong><span>notes-to-quest games</span></div>
+            <div><strong>0</strong><span>API keys required</span></div>
+          </div>
+
+          <div class="mascot-stage" aria-hidden="true">
+            <div class="orbit orbit-one"><span>?</span></div>
+            <div class="orbit orbit-two"><span>π</span></div>
+            <div class="orbit orbit-three"><span>{ }</span></div>
+            <div class="kridling">
+              <div class="antenna"><i></i></div>
+              <div class="kridling-head">
+                <div class="eye eye-left"><i></i></div>
+                <div class="eye eye-right"><i></i></div>
+                <div class="mouth"></div>
+              </div>
+              <div class="kridling-body"><span></span></div>
+              <div class="shadow"></div>
+            </div>
+            <div class="speech-bubble">I ate your boring worksheet.<br /><strong>You’re welcome.</strong></div>
+          </div>
+        </div>
+
+        <div class="quest-builder" id="questBuilder">
+          <div class="builder-heading">
+            <div>
+              <span class="step-label">QUEST BUILDER</span>
+              <h2>Choose your learning world</h2>
+            </div>
+            <span class="live-pill"><i></i> READY</span>
+          </div>
+
+          <div class="mode-tabs" role="tablist" aria-label="Quest source">
+            <button class="mode-tab active" id="worldTab" role="tab" aria-selected="true" data-mode="world">
+              Curated worlds
+            </button>
+            <button class="mode-tab" id="notesTab" role="tab" aria-selected="false" data-mode="notes">
+              Turn my notes into a quest
+            </button>
+          </div>
+
+          <div class="builder-panel active" id="worldPanel" role="tabpanel" aria-labelledby="worldTab">
+            <div class="world-panel-heading">
+              <div class="field-label"><span>01</span> Pick a featured world</div>
+              <button class="more-worlds-button" id="moreWorldsButton" aria-expanded="false" aria-controls="topicAtlas">
+                <span>＋</span> Explore 240+ more topics
+              </button>
+            </div>
+            <div class="world-grid" id="worldGrid">
+              <button class="world-card selected" data-world="fractions" aria-pressed="true">
+                <span class="world-symbol fraction-symbol"><i></i><i></i></span>
+                <span><strong>Fraction Frontier</strong><small>Math</small></span>
+                <b>01</b>
+              </button>
+              <button class="world-card" data-world="photosynthesis" aria-pressed="false">
+                <span class="world-symbol leaf-symbol"><i></i></span>
+                <span><strong>Chlorophyll City</strong><small>Biology</small></span>
+                <b>02</b>
+              </button>
+              <button class="world-card" data-world="javascript" aria-pressed="false">
+                <span class="world-symbol code-symbol">JS</span>
+                <span><strong>JavaScript Jungle</strong><small>Coding</small></span>
+                <b>03</b>
+              </button>
+              <button class="world-card" data-world="solar" aria-pressed="false">
+                <span class="world-symbol planet-symbol"><i></i></span>
+                <span><strong>Orbit Outpost</strong><small>Space</small></span>
+                <b>04</b>
+              </button>
+              <button class="world-card" data-world="digestion" aria-pressed="false">
+                <span class="world-symbol stomach-symbol"><i></i></span>
+                <span><strong>Digestive Dungeon</strong><small>Biology</small></span>
+                <b>05</b>
+              </button>
+              <button class="world-card" data-world="climate" aria-pressed="false">
+                <span class="world-symbol weather-symbol"><i></i><i></i><i></i></span>
+                <span><strong>Climate Command</strong><small>Earth science</small></span>
+                <b>06</b>
+              </button>
+            </div>
+            <section class="topic-atlas" id="topicAtlas" hidden aria-label="Topic Atlas">
+              <div class="atlas-heading">
+                <div><span class="step-label">THE TOPIC ATLAS</span><h3>Open a portal to almost anything</h3></div>
+                <span class="online-badge"><i></i> ENCYCLOPEDIA POWERED</span>
+              </div>
+              <label class="atlas-search">
+                <span aria-hidden="true">⌕</span>
+                <input id="topicSearch" type="search" placeholder="Search 240+ ideas—or type any topic in the world" autocomplete="off" />
+                <button id="buildTopicButton" type="button">BUILD QUEST</button>
+              </label>
+              <div class="category-chips" id="categoryChips" aria-label="Topic categories"></div>
+              <div class="atlas-results" id="atlasResults"></div>
+              <p class="atlas-note">Suggested portals are searchable offline. Opening one uses a live encyclopedia article when connected, and every generated question is grounded in that source.</p>
+            </section>
+          </div>
+
+          <div class="builder-panel" id="notesPanel" role="tabpanel" aria-labelledby="notesTab" hidden>
+            <div class="notes-heading">
+              <div class="field-label"><span>01</span> Paste notes, PDF text, or a syllabus</div>
+              <div class="note-source-actions">
+                <button class="text-button" id="loadDemoNotes">Use demo notes</button>
+                <label class="pdf-upload-button" for="questPdfInput"><span>↑</span> Upload PDF<input class="sr-only" id="questPdfInput" type="file" accept="application/pdf,.pdf" data-pdf-input /></label>
+              </div>
+            </div>
+            <div class="pdf-import-status" id="questPdfStatus" role="status" aria-live="polite">Text-based PDFs up to 20 MB · extracted locally in this browser</div>
+            <div class="accessible-note-tools" aria-label="Accessible note input options">
+              <button class="dictation-button" id="dictateNotesButton" type="button" aria-pressed="false">
+                <span class="dictation-icon" aria-hidden="true"><i></i></span>
+                <span><strong>Speak my notes</strong><small>Long dictation · auto-renews sessions</small></span>
+              </button>
+              <label class="audio-upload-button" for="lectureAudioInput">
+                <span class="audio-wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                <span><strong>Upload a lecture</strong><small>MP3 or WAV · transcribed in-browser</small></span>
+                <input class="sr-only" id="lectureAudioInput" type="file" accept="audio/mpeg,audio/wav,.mp3,.wav" />
+              </label>
+            </div>
+            <div class="accessible-input-status" id="accessibleInputStatus" role="status" aria-live="polite">English POC · long dictation survives browser session timeouts</div>
+            <label class="notes-input-wrap">
+              <span class="sr-only">Your study notes</span>
+              <textarea
+                id="notesInput"
+                rows="9"
+                placeholder="Paste anything here—paragraphs, bullet points, numbered notes, class notes, or text copied from a PDF. No special format needed."
+              ></textarea>
+              <span class="note-counter" id="noteCounter">Waiting for notes</span>
+            </label>
+            <div class="notes-assurance"><span>✦</span><p><strong>Smart local note engine:</strong> detects ideas and builds lessons, flashcards, recall battles, and exam questions from your own words. Your notes stay in this browser.</p></div>
+          </div>
+
+          <div class="settings-row">
+            <div class="setting-block">
+              <div class="field-label"><span>02</span> Study style</div>
+              <div class="segmented" id="gradeSelector">
+                <button data-grade="Explorer">Explain like I’m 10</button>
+                <button class="selected" data-grade="Scholar">Story quest</button>
+                <button data-grade="Master">Exam mode</button>
+              </div>
+            </div>
+            <div class="setting-block">
+              <div class="field-label"><span>03</span> Challenge</div>
+              <div class="segmented" id="difficultySelector">
+                <button data-difficulty="Chill">Chill</button>
+                <button class="selected" data-difficulty="Bold">Bold</button>
+                <button data-difficulty="Brainstorm">Brainstorm</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="builder-error" id="builderError" role="alert"></div>
+          <button class="primary-button launch-button" id="launchButton">
+            <span>ENTER THE KRID</span>
+            <i aria-hidden="true">→</i>
+          </button>
+          <button class="continue-button" id="continueButton" hidden>
+            <span><small>RESUME SAVED QUEST</small><strong id="continueTitle">Fraction Frontier</strong></span>
+            <i aria-hidden="true">Continue →</i>
+          </button>
+          <button class="weak-review-button" id="weakReviewLandingButton" hidden>
+            <span>↻</span><span><small>ADAPTIVE REMATCH</small><strong>Review my weakest areas</strong></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="screen companion-screen" id="companionScreen" hidden aria-labelledby="companionTitle">
+        <div class="companion-hud">
+          <div class="companion-identity">
+            <button class="back-button" id="exitCompanionButton" aria-label="Return home">←</button>
+            <span class="companion-mini-face" aria-hidden="true"><i></i><i></i><b></b></span>
+            <div><small>YOUR OFFLINE STUDY CREATURE</small><strong id="companionTitle">Krid is awake</strong></div>
+          </div>
+          <div class="companion-hud-actions">
+            <span class="local-status"><i></i> SEMANTIC ENGINE 4 · NO API KEY</span>
+            <button class="voice-toggle active locked" id="kridVoiceToggle" aria-pressed="true" disabled><span>◖))</span> Voice-only mode</button>
+          </div>
+        </div>
+
+        <div class="companion-layout">
+          <aside class="companion-setup-panel">
+            <div class="companion-panel-heading"><span>CONVERSATION LAB</span><b>01</b></div>
+            <h2>How should Krid challenge you?</h2>
+            <div class="companion-modes" id="companionModes">
+              <button class="selected" data-companion-mode="teach"><span>🧠</span><strong>Teach Krid</strong><small>Explain it in your own words</small></button>
+              <button data-companion-mode="memory"><span>🗝</span><strong>Memory Adventure</strong><small>Recall it without peeking</small></button>
+              <button data-companion-mode="interview"><span>▣</span><strong>Interview Krid</strong><small>Practise realistic answers</small></button>
+              <button data-companion-mode="discuss"><span>✦</span><strong>Discuss</strong><small>Ask about your supplied notes</small></button>
+            </div>
+
+            <div class="companion-source" id="studySourceFields">
+              <label><span>CHOOSE A VOICE TOPIC PACK</span><select id="companionPackSelect"><option value="cells">The Human Cell</option><option value="fractions">Fractions</option><option value="photosynthesis">Photosynthesis</option><option value="javascript">JavaScript Basics</option><option value="solar">The Solar System</option><option value="digestion">Human Digestion</option><option value="climate">Climate Science</option><option value="custom">My own material</option></select></label>
+              <div class="companion-pdf-import"><label class="pdf-upload-button" for="companionPdfInput"><span>↑</span> Use a PDF<input class="sr-only" id="companionPdfInput" type="file" accept="application/pdf,.pdf" data-pdf-input /></label><span class="pdf-import-status" id="companionPdfStatus" role="status" aria-live="polite">Selectable-text PDFs only for this POC</span></div>
+              <input id="companionTopic" type="hidden" value="The Human Cell" />
+              <details class="custom-material" id="customMaterialDetails"><summary>Optional: use my own notes</summary><label><span>PASTE SOURCE MATERIAL ONCE</span><textarea id="companionNotes" rows="7" placeholder="This is setup material only. The actual conversation remains completely voice-based."></textarea></label></details>
+              <button class="tiny-action" id="loadCompanionDemo">RESET CELL DEMO PACK</button>
+            </div>
+
+            <div class="interview-source" id="interviewFields" hidden>
+              <label><span>TARGET ROLE</span><select id="interviewRole"><option>General job interview</option><option>Frontend Developer</option><option>Software Engineer</option><option>Data Analyst</option><option>Product Manager</option><option>Teacher</option><option>Customer Support Specialist</option><option>University admission</option></select></label>
+              <label><span>INTERVIEW TRACK</span><select id="interviewTrack"><option>General</option><option>Software</option><option>Data</option><option>Product</option><option>Behavioral</option></select></label>
+              <label><span>QUESTION SOURCE</span><select id="interviewSource"><option value="bank">Role question bank</option><option value="notes">My selected study notes</option><option value="mixed">Mix role questions + my notes</option></select></label>
+              <textarea id="customInterviewQuestion" hidden></textarea>
+              <textarea id="interviewAnswerNotes" hidden></textarea>
+            </div>
+
+            <p class="companion-local-note"><span>⌂</span><strong>Local semantic engine.</strong> Krid organizes messy headings, lists, and paragraphs into concepts, accepts paraphrases, and shuffles questions. Browser speech recognition may use its own speech service.</p>
+            <div class="companion-setup-error" id="companionSetupError" role="alert"></div>
+            <button class="primary-button companion-start" id="startCompanionButton"><span>WAKE KRID UP</span><i>⚡</i></button>
+          </aside>
+
+          <section class="companion-stage-panel">
+            <div class="krid-scene" id="kridScene" data-mood="idle">
+              <div class="scene-grid" aria-hidden="true"></div>
+              <div class="thought-particles" aria-hidden="true"><i>?</i><i>!</i><i>π</i></div>
+              <div class="krid-reaction-burst" aria-hidden="true"><i>✦</i><i>★</i><i>✦</i><i>+</i></div>
+              <div class="live-krid" id="liveKrid" role="img" aria-label="Krid is ready to study.">
+                <div class="live-antenna"><i></i></div>
+                <div class="live-ears"><i></i><i></i></div>
+                <div class="live-head">
+                  <span class="live-brow left"></span><span class="live-brow right"></span>
+                  <span class="live-eye left"><i></i></span><span class="live-eye right"><i></i></span>
+                  <span class="live-mouth"><i></i></span>
+                  <span class="live-cheek left"></span><span class="live-cheek right"></span>
+                </div>
+                <div class="live-body"><span class="knowledge-core">K</span></div>
+                <div class="live-arm left"></div><div class="live-arm right"></div>
+                <div class="live-shadow"></div>
+              </div>
+              <div class="krid-live-caption" id="kridLiveCaption"><small>VOICE ASSISTANT</small><strong>Voice session not started</strong></div>
+              <span class="mood-chip" id="kridMoodChip"><i></i> IDLE</span>
+            </div>
+
+            <div class="voice-only-console">
+              <div class="voice-wave" id="voiceWave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <small>VOICE CONNECTION</small>
+              <strong id="voiceMainStatus">Wake Krid to begin</strong>
+              <p id="voiceInstruction">Krid will speak first. Then tap the microphone and answer aloud.</p>
+              <button type="button" class="voice-orb-button" id="kridMicButton" disabled aria-label="Tap to speak" title="Voice input requires browser speech recognition"><span class="voice-mic-icon">●</span><b>TAP TO TALK</b><em>No typing needed</em></button>
+              <button type="button" class="repeat-krid-button" id="repeatKridButton" disabled>↻ Replay what Krid said</button>
+            </div>
+            <p class="voice-support" id="voiceSupportMessage">Voice-only interaction requires speech recognition in your browser. Chrome or Edge is recommended.</p>
+          </section>
+
+          <aside class="krid-brain-panel">
+            <div class="companion-panel-heading"><span>KRID'S BRAIN</span><b>LIVE</b></div>
+            <div class="bond-card">
+              <div class="brain-crystal" id="brainCrystal"><i></i><i></i><strong>K</strong></div>
+              <div><small>RELATIONSHIP</small><strong id="bondTitle">New acquaintance</strong><span id="bondXp">0 bond XP</span></div>
+            </div>
+            <div class="brain-stats">
+              <div><strong id="conversationTurns">0</strong><span>turns</span></div>
+              <div><strong id="recallAverage">0%</strong><span>recall</span></div>
+              <div><strong id="conceptsDiscovered">0</strong><span>concepts</span></div>
+            </div>
+            <div class="brain-map-heading"><span>MEMORY MAP</span><small id="brainMapStatus">Waiting for material</small></div>
+            <div class="companion-brain-map" id="companionBrainMap"></div>
+            <div class="dark-krid-card">
+              <span class="dark-orb" aria-hidden="true">K</span>
+              <div><small>PERSONAL BOSS</small><strong>Dark Krid</strong><p>Built from your weakest memories.</p></div>
+              <button id="launchDarkKrid" disabled>LOCKED</button>
+            </div>
+            <div class="companion-session-actions">
+              <button id="exportConversation" disabled>◖)) Hear progress summary</button>
+              <button id="resetCompanion" disabled>↻ New session</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen game-screen" id="gameScreen" aria-label="The Study Krid game" hidden>
+        <div class="game-hud">
+          <div class="world-identity">
+            <button class="back-button" id="exitQuestButton" aria-label="Exit quest">←</button>
+            <div class="world-badge" id="worldBadge">FR</div>
+            <div><small id="worldSubject">MATHEMATICS REALM</small><strong id="worldTitle">Fraction Frontier</strong></div>
+          </div>
+          <div class="hud-stats">
+            <div class="level-meter">
+              <span>LEVEL <b id="levelNumber">1</b></span>
+              <div><i id="xpBar"></i></div>
+              <small id="xpText">0 / 300 XP</small>
+            </div>
+            <div class="stat-chip energy-chip" title="Focus energy">
+              <span class="energy-icon" aria-hidden="true">◆</span>
+              <strong id="energyCount">5</strong>
+            </div>
+            <div class="stat-chip" title="Krid coins">
+              <span class="coin-icon" aria-hidden="true">K</span>
+              <strong id="coinCount">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="game-layout">
+          <aside class="route-panel">
+            <div class="panel-caption"><span>QUEST ROUTE</span><b id="routeProgress">0%</b></div>
+            <div class="route-progress"><i id="routeProgressBar"></i></div>
+            <nav class="route-map" id="routeMap" aria-label="Quest stages"></nav>
+            <div class="route-footer">
+              <span class="pulse-dot"></span>
+              <div><small>CURRENT MISSION</small><strong id="currentMission">Meet your guide</strong></div>
+            </div>
+          </aside>
+
+          <section class="stage-shell" id="stageShell">
+            <div class="stage-topline">
+              <div class="stage-tag" id="stageTag">MISSION 01 · LEARN</div>
+              <div class="streak" id="streakBadge"><span>↗</span> <b id="streakCount">0</b> streak</div>
+            </div>
+            <div id="stageViewport" aria-live="polite"></div>
+          </section>
+
+          <aside class="coach-panel">
+            <div class="coach-header">
+              <span class="coach-avatar"><i></i><b></b></span>
+              <div><small>YOUR KRID GUIDE</small><strong>Professor Pip</strong></div>
+              <span class="online-dot" title="Ready"></span>
+            </div>
+            <div class="coach-message" id="coachMessage">
+              Your brain has arrived. Excellent. I was worried I would have to do all the thinking.
+            </div>
+            <div class="mastery-title"><span>CONCEPT MASTERY</span><b id="masteryAverage">0%</b></div>
+            <div class="mastery-list" id="masteryList"></div>
+            <div class="inventory">
+              <div class="inventory-title">KRID KIT <span id="inventoryCount">0 / 3</span></div>
+              <div class="inventory-slots" id="inventorySlots">
+                <button class="inventory-slot locked" data-item="hint" title="Hint Lens"><span>?</span><small>Hint Lens</small></button>
+                <button class="inventory-slot locked" data-item="shield" title="Focus Shield"><span>◇</span><small>Shield</small></button>
+                <button class="inventory-slot locked" data-item="double" title="Double XP"><span>2×</span><small>Double XP</small></button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="screen report-screen" id="reportScreen" hidden aria-labelledby="reportTitle">
+        <div class="report-wrap">
+          <div class="report-hero">
+            <div class="victory-seal"><span>KRID</span><strong>S</strong><i>QUEST CLEARED</i></div>
+            <div>
+              <div class="eyebrow"><span></span> KNOWLEDGE GLITCH DEFEATED</div>
+              <h1 id="reportTitle">You made your brain<br /><em>noticeably mightier.</em></h1>
+              <p id="reportSummary">Your quest report is ready.</p>
+            </div>
+          </div>
+
+          <div class="report-grid">
+            <section class="report-card score-card">
+              <span class="card-kicker">MASTERY SCORE</span>
+              <div class="score-ring" id="scoreRing"><strong id="finalScore">0</strong><small>/ 100</small></div>
+              <div class="rank-line"><span>RANK</span><strong id="finalRank">Curious Rookie</strong></div>
+            </section>
+            <section class="report-card stats-card">
+              <span class="card-kicker">QUEST STATS</span>
+              <div class="report-stats">
+                <div><strong id="finalCorrect">0</strong><span>correct answers</span></div>
+                <div><strong id="finalAccuracy">0%</strong><span>accuracy</span></div>
+                <div><strong id="finalXp">0</strong><span>XP collected</span></div>
+                <div><strong id="finalTime">0:00</strong><span>quest time</span></div>
+              </div>
+            </section>
+            <section class="report-card map-card">
+              <div class="card-heading"><span class="card-kicker">KNOWLEDGE MAP</span><small>What stuck</small></div>
+              <div id="finalMasteryList" class="final-mastery-list"></div>
+            </section>
+            <section class="report-card prescription-card">
+              <div class="card-heading"><span class="card-kicker">NEXT-BEST REVISION</span><small>Personalized for you</small></div>
+              <div id="revisionPrescription" class="revision-prescription"></div>
+            </section>
+          </div>
+
+          <div class="report-actions">
+            <button class="secondary-button weak-review-report" id="weakReviewButton">Play weak-area rematch</button>
+            <button class="secondary-button" id="replayButton">Replay this world</button>
+            <button class="secondary-button" id="downloadReportButton">Download study report</button>
+            <button class="secondary-button" id="shareResultButton">Share result</button>
+            <button class="primary-button" id="newQuestButton"><span>START A NEW QUEST</span><i>→</i></button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal-backdrop" id="helpModal" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+        <button class="modal-close" id="closeHelpButton" aria-label="Close">×</button>
+        <span class="step-label">FIELD MANUAL</span>
+        <h2 id="helpTitle">How to enter The Study Krid</h2>
+        <div class="how-grid">
+          <div><b>00</b><strong>Talk to Krid</strong><p>Hear every prompt and answer aloud—teach a topic, practise recall, discuss material, or face a mock interview.</p></div>
+          <div><b>01</b><strong>Enter rooms</strong><p>Each room teaches one concept through a scrollable flip-card. Tap a completed route node whenever you want to revisit its question.</p></div>
+          <div><b>02</b><strong>Cast answers</strong><p>Your answer spells stun the Confusion Blob and unlock doors. Mistakes trigger funny hints.</p></div>
+          <div><b>03</b><strong>Build powers</strong><p>Rate confidence, collect kit items, and let weak concepts shape the boss battle.</p></div>
+          <div><b>04</b><strong>Return stronger</strong><p>Get a spaced-repetition plan or launch a weak-area rematch.</p></div>
+        </div>
+        <p class="keyboard-tip"><kbd>1</kbd>–<kbd>4</kbd> choose an answer · <kbd>Enter</kbd> continues</p>
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="sr-only" id="accessibilityStatus" role="status" aria-live="polite">Easy view is off.</div>
+    <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+    <script src="curriculum.js"></script>
+    <script src="krid-companion.js"></script>
+    <script src="app.js"></script>
+    <script src="pdf-import.js"></script>
+    <script src="accessible-input.js"></script>
+  </body>
+</html>
