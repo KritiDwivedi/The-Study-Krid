@@ -105,21 +105,3 @@ Codex accelerated:
 
 The key human product decisions were to keep the app genuinely useful for revision, make it work without an API key, include both curated and learner-provided content, use humor without weakening the learning, and avoid third-party intellectual property. GPT-5.6 and Codex translated those decisions into the finished interaction design, code, content system, and verification workflow.
 
-## Suggested sub-three-minute demo
-
-- **0:00–0:20** — problem and one-sentence pitch
-- **0:20–0:45** — open Talk to Krid, choose a ready-made topic pack, and hear Krid begin Teach mode
-- **0:45–1:20** — answer aloud, show the automatic evaluation and Krid's animated spoken feedback, then improve the answer
-- **1:20–1:50** — switch to Interview Krid, answer aloud, and hear structured coaching plus a model-answer map
-- **1:50–2:20** — show Krid's persistent memory map and fight the personalised Dark Krid boss
-- **2:20–2:30** — briefly show that the original explorable quest worlds remain available
-- **2:30–2:45** — toggle Easy view, speak one note, and show an uploaded lecture transcript becoming a quest
-- **2:45–2:58** — show the file architecture and explain how Codex/GPT-5.6 accelerated implementation and validation
-
-## Privacy
-
-The app has no analytics and does not upload notes or prerecorded lecture audio itself. Uploaded MP3/WAV files are decoded and transcribed inside the browser after the speech model is downloaded. Only the optional Topic Atlas sends a topic title to Wikipedia and retrieves its article extract; pasted notes are never included in that request. Live speech recognition is provided by the browser and may send microphone audio to the browser vendor's speech service, depending on that browser and operating system.
-
-## License
-
-MIT. See [LICENSE](LICENSE).
