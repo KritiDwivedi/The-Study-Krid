@@ -96,11 +96,11 @@ This project was created during the hackathon in collaboration with Codex powere
 Codex accelerated:
 
 - turning the initial “StudyForge plus a funny educational game” idea into a concrete game loop and product architecture;
-- creating the original responsive interface and code-drawn visual identity;
-- implementing the quest state machine, room and door progression, battle effects, local persistence, flexible notes-to-quest engine, Topic Atlas importer, adaptive mastery/confidence model, spaced revision, report export, Web Audio cues, and PWA support;
-- building the accessibility POC as one coherent input layer: live dictation, local audio decoding and resampling, lazy Whisper transcription, assistive status announcements, and a persistent low-motion Easy view;
-- designing and implementing Krid as an animated offline character with a deterministic, explainable learning engine rather than disguising a rule-based system as an unrestricted chatbot;
-- drafting and validating the original learning content across six subject worlds;
+- creating the original responsive interface and code-drawn visual identity
+- implementing the quest state machine, room and door progression, battle effects, local persistence, flexible notes-to-quest engine, Topic Atlas importer, adaptive mastery/confidence model, spaced revision, report export, Web Audio cues, and PWA support
+- building the accessibility POC as one coherent input layer: live dictation, local audio decoding and resampling, lazy Whisper transcription, assistive status announcements, and a persistent low-motion Easy view
+- designing and implementing Krid as an animated offline character with a deterministic, explainable learning engine rather than disguising a rule-based system as an unrestricted chatbot
+- drafting and validating the original learning content across six subject worlds
 - checking JavaScript syntax and automatically validating both curated and generated question structures across paragraphs, bullets, numbered notes, and mixed formatting.
 
 The key human product decisions were to keep the app genuinely useful for revision, make it work without an API key, include both curated and learner-provided content, use humor without weakening the learning, and avoid third-party intellectual property. GPT-5.6 and Codex translated those decisions into the finished interaction design, code, content system, and verification workflow.
