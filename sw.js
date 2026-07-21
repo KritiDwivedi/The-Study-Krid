@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE = "study-krid-v18";
+const CACHE = "study-krid-v19";
 const APP_SHELL = [
   "./",
   "./index.html",

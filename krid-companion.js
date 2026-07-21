@@ -827,7 +827,9 @@ function selectKridFemaleVoice(voices) {
     const english = /^en(?:[-_]|$)/i.test(voice.lang || "") || /\benglish\b/i.test(descriptor);
     if (!english || maleNames.test(descriptor)) return { voice, score: -1 };
     let score = femaleNames.test(descriptor) ? 100 : -1;
-    if (/^Google US English$/i.test(voice.name || "")) score = 90;
+    // This was Krid's original clear Chrome voice; keep it consistent across hosted and local origins.
+    if (/^Google US English$/i.test(voice.name || "")) score = 250;
+    else if (score >= 0 && /\b(natural|premium)\b/i.test(descriptor)) score += 30;
     if (score >= 0 && /^en-US$/i.test(voice.lang || "")) score += 5;
     if (score >= 0 && voice.localService) score += 2;
     return { voice, score };
@@ -872,8 +874,9 @@ function speakCompanionText(text, voiceAttempt = 0) {
   setCompanionVoiceStatus("Krid is talking…", "Listen first. Your microphone unlocks when Krid finishes.", "talking");
   renderCompanionBrain();
   const utterance = new SpeechSynthesisUtterance(text.replace(/[↗⚡🧠🗝▣✦]/g, ""));
-  utterance.rate = 1.03;
-  utterance.pitch = 1.18;
+  utterance.rate = 1;
+  utterance.pitch = 1.08;
+  utterance.volume = 0.94;
   utterance.voice = femaleVoice;
   utterance.onstart = () => {
     setCompanionMood("talking", "talking");
@@ -897,7 +900,12 @@ function speakCompanionText(text, voiceAttempt = 0) {
   };
   utterance.onend = finishSpeaking;
   utterance.onerror = finishSpeaking;
-  speechSynthesis.speak(utterance);
+  // Give cancel() a brief moment to release the previous audio buffer, preventing overlapping/echoed speech.
+  window.setTimeout(() => {
+    if (speechToken !== companionSpeechToken) return;
+    speechSynthesis.resume?.();
+    speechSynthesis.speak(utterance);
+  }, 45);
 }
 
 function setCompanionQuickPrompts() {

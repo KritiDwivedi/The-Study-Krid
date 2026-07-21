@@ -42,6 +42,7 @@ assert.equal(femaleVoice.name, "Samantha", "Krid must choose a recognised female
 assert.equal(api.selectKridFemaleVoice([{ name: "Daniel", lang: "en-GB", voiceURI: "Daniel" }]), null, "Krid must not fall back when only a male voice is available");
 assert.equal(api.selectKridFemaleVoice([{ name: "Google UK English Male", lang: "en-GB" }, { name: "Google UK English Female", lang: "en-GB" }]).name, "Google UK English Female", "explicit browser voice genders must be respected");
 assert.equal(api.selectKridFemaleVoice([{ name: "Google US English", lang: "en-US" }]).name, "Google US English", "Chrome's named US English female voice should be supported");
+assert.equal(api.selectKridFemaleVoice([{ name: "Samantha", lang: "en-US", localService: true }, { name: "Google US English", lang: "en-US" }]).name, "Google US English", "the clear original Chrome voice should stay consistent between local and GitHub Pages origins");
 const companionStyles = fs.readFileSync(stylePath, "utf8");
 assert.match(companionStyles, /data-mood="listening"[^}]+krid-listen-head/s, "open-microphone mode should animate Krid's listening head tilt");
 assert.match(companionStyles, /data-mood="celebrating"[^}]+krid-happy-head/s, "strong answers should animate a celebration");
@@ -49,6 +50,7 @@ assert.match(companionStyles, /data-mood="oops"[^}]+krid-oops-head/s, "incorrect
 assert.match(companionStyles, /\.live-arm::after/, "Krid should have expressive hand shapes");
 assert.match(fs.readFileSync(htmlPath, "utf8"), /id="liveKrid" role="img" aria-label=/, "Krid's changing visual mood should be exposed as an accessible image description");
 assert.doesNotMatch(source, /voices\.find\([^\n]+\|\|\s*voices\.find/, "voice synthesis must not contain the former arbitrary-English fallback");
+assert.match(source, /speechSynthesis\.cancel\(\)[\s\S]{0,1600}setTimeout\([\s\S]{0,400}speechSynthesis\.speak/, "a short post-cancel buffer should prevent overlapping utterances and echo");
 
 const fractionPack = api.getCompanionPack("fractions");
 assert.equal(fractionPack.title, "Fractions");
