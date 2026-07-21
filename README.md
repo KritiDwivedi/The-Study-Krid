@@ -89,7 +89,7 @@ Alternatively, press **Talk to Krid**, choose a mode and topic pack or interview
 
 All artwork, sounds, interface elements, copy, and learning content in this repository are original or generated directly in code. There are no third-party trademarks, copyrighted characters, music files, or fonts. The optional PDF importer uses Mozilla [PDF.js](https://github.com/mozilla/pdf.js), distributed under the Apache-2.0 license. The optional lecture POC uses pinned [Transformers.js](https://huggingface.co/docs/transformers.js/) and a browser-compatible Whisper Tiny English model, both loaded only on demand.
 
-## Collaboration with Codex and GPT-5.6
+## Collaboration with Codex and GPT
 
 This project was created during the hackathon in collaboration with Codex powered by GPT-5.6.
 
